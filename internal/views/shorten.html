@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortened</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        p {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+
+        #copyButton {
+            display: block;
+            margin: 20px auto;
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        #copyButton:hover {
+            background-color: #0056b3;
+        }
+
+        .url-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin: 20px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Shortened URL</h1>
+    <div class="url-container">
+        <p>Your shortened URL is: <a href="/{{.ShortURL}}" target="_blank">{{.ShortURL}}</a></p>
+        <button id="copyButton" data-url="{{.ShortURL}}">Copy to clipboard</button>
+    </div>
+
+    <script>
+
+        const copyButton = document.getElementById('copyButton');
+        const url = copyButton.getAttribute('data-url');
+
+        // Log the URL to ensure data-url is populated
+        console.log("Data URL to copy:", url);
+
+        copyButton.addEventListener('click', function () {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText("http://localhost:8080" + url).then(() => {
+                    alert('URL copied to clipboard!');
+                }).catch(err => {
+                    console.error('Failed to copy:', err);
+                });
+            } else {
+                alert('Clipboard API not supported in this browser.');
+            }
+        });
+    </script>
+
+</body>
+</html>
