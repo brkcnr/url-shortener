@@ -61,6 +61,12 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             margin: 20px 0;
             text-align: center;
+            border: 2px solid #e0e0e0;
+            transition: border-color 0.3s;
+        }
+
+        .url-container:hover {
+            border-color: #007bff;
         }
     </style>
 </head>
@@ -81,7 +87,7 @@
 
         copyButton.addEventListener('click', function () {
             if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText("http://localhost:8080" + url).then(() => {
+                navigator.clipboard.writeText("http://localhost:8080/" + url).then(() => {
                     alert('URL copied to clipboard!');
                 }).catch(err => {
                     console.error('Failed to copy:', err);
