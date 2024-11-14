@@ -11,7 +11,7 @@ A simple and efficient URL shortening service built with Go. This application al
 
 ## Requirements
 
-- Go 1.16 or higher
+- Go 1.23 or higher
 - SQLite3
 
 ## Installation
