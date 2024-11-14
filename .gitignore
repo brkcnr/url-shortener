@@ -20,6 +20,9 @@ go.work
 # Database files
 *.db
 *.db-journal
+db.sqlite
+*.sqlite
+*.sqlite3
 
 # IDE specific files
 .idea/
