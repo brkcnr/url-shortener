@@ -24,6 +24,8 @@ func main() {
 		log.Fatal(err)
 	}
 
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("internal/static"))))
+
 	http.HandleFunc("/shorten", controllers.Shorten(slite))
 
 	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
