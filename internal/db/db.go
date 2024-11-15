@@ -31,3 +31,29 @@ func GetOriginalURL(db *sql.DB, shortURL string) (string, error) {
     }
 	return originalURL, nil
 }
+
+// URLPair represents a pair of short and original URLs
+type URLPair struct {
+    ShortURL    string
+    OriginalURL string
+}
+
+// GetAllURLs retrieves all shortened URLs from the database
+func GetAllURLs(db *sql.DB) ([]URLPair, error) {
+    query := `SELECT short_url, original_url FROM urls ORDER BY id DESC LIMIT 10`
+    rows, err := db.Query(query)
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close()
+
+    var urls []URLPair
+    for rows.Next() {
+        var pair URLPair
+        if err := rows.Scan(&pair.ShortURL, &pair.OriginalURL); err != nil {
+            return nil, err
+        }
+        urls = append(urls, pair)
+    }
+    return urls, nil
+}

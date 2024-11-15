@@ -1,0 +1,22 @@
+<div id="historyContent" class="history-content">
+    {{if .URLs}}
+        {{range .URLs}}
+        <div class="url-container">
+            <p>
+                Short URL: <a href="/{{.ShortURL}}" target="_blank">{{.ShortURL}}</a>
+                <br>
+                Original URL: <a href="{{.OriginalURL}}" target="_blank">{{.OriginalURL}}</a>
+            </p>
+            <button hx-post="/copy" 
+                    hx-trigger="click" 
+                    hx-vals='{"url": "{{.ShortURL}}"}'
+                    hx-swap="none"
+                    onclick="copyToClipboard('{{.ShortURL}}')">
+                Copy short URL
+            </button>
+        </div>
+        {{end}}
+    {{else}}
+        <p>No URLs shortened yet</p>
+    {{end}}
+</div>

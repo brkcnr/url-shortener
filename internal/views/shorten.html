@@ -6,6 +6,8 @@
     <title>URL Shortened</title>
     <link rel="stylesheet" href="/static/css/styles.css">
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+    <script src="/static/js/app.js"></script>
 </head>
 <body>
     <div class="url-container">
@@ -18,18 +20,5 @@
             Copy to clipboard
         </button>
     </div>
-
-    <script>
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(window.location.origin + '/' + text)
-                .then(() => {
-                    alert('URL copied to clipboard!');
-                })
-                .catch(err => {
-                    console.error('Failed to copy:', err);
-                    alert('Failed to copy URL');
-                });
-        }
-    </script>
 </body>
 </html>

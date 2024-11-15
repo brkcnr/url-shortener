@@ -87,3 +87,98 @@ a:hover {
 .url-container:hover {
     border-color: #007bff;
 }
+
+.url-history {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.url-history h2 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.url-container {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+.url-container:last-child {
+    margin-bottom: 0;
+}
+
+.url-container p {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.history-btn {
+    width: 100%;
+    padding: 15px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.history-btn .arrow {
+    transition: transform 0.3s ease;
+}
+
+.history-btn.active {
+    background-color: #0056b3;
+}
+
+.history-btn.active .arrow {
+    transform: rotate(180deg);
+}
+
+.history-content {
+    margin-top: 10px;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow: hidden;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.history-content.hidden {
+    display: none;
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.copy-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #28a745;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s, transform 0.3s;
+    z-index: 1000;
+}
+
+.copy-notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}

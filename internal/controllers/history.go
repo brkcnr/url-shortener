@@ -8,8 +8,8 @@ import (
 	"github.com/brkcnr/url-shortener/internal/db"
 )
 
-// ShowIndex handles the rendering of the index page template.
-func ShowIndex(w http.ResponseWriter, r *http.Request) {
+// ToggleHistory handles the HTMX request for showing/hiding URL history
+func ToggleHistory(w http.ResponseWriter, r *http.Request) {
 	database := r.Context().Value("db").(*sql.DB)
 	
 	urls, err := db.GetAllURLs(database)
@@ -24,13 +24,14 @@ func ShowIndex(w http.ResponseWriter, r *http.Request) {
 		URLs: urls,
 	}
 
-	tmpl, err := template.ParseFiles("internal/views/index.html")
+	tmpl, err := template.ParseFiles("internal/views/partials/url_history.html")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	
 	if err = tmpl.Execute(w, data); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-}
+} 
