@@ -1,0 +1,10 @@
+<div class="url-container">
+    <p>Your shortened URL is: <a href="/{{.ShortURL}}" target="_blank">{{.ShortURL}}</a></p>
+    <button hx-post="/copy" 
+            hx-trigger="click" 
+            hx-vals='{"url": "{{.ShortURL}}"}'
+            hx-swap="none"
+            onclick="copyToClipboard('{{.ShortURL}}')">
+        Copy to clipboard
+    </button>
+</div> 

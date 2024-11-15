@@ -69,34 +69,31 @@
             border-color: #007bff;
         }
     </style>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
 <body>
-    <h1>Shortened URL</h1>
     <div class="url-container">
         <p>Your shortened URL is: <a href="/{{.ShortURL}}" target="_blank">{{.ShortURL}}</a></p>
-        <button id="copyButton" data-url="{{.ShortURL}}">Copy to clipboard</button>
+        <button hx-post="/copy" 
+                hx-trigger="click" 
+                hx-vals='{"url": "{{.ShortURL}}"}'
+                hx-swap="none"
+                onclick="copyToClipboard('{{.ShortURL}}')">
+            Copy to clipboard
+        </button>
     </div>
 
     <script>
-
-        const copyButton = document.getElementById('copyButton');
-        const url = copyButton.getAttribute('data-url');
-
-        // Log the URL to ensure data-url is populated
-        console.log("Data URL to copy:", url);
-
-        copyButton.addEventListener('click', function () {
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText("http://localhost:8080/" + url).then(() => {
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(window.location.origin + '/' + text)
+                .then(() => {
                     alert('URL copied to clipboard!');
-                }).catch(err => {
+                })
+                .catch(err => {
                     console.error('Failed to copy:', err);
+                    alert('Failed to copy URL');
                 });
-            } else {
-                alert('Clipboard API not supported in this browser.');
-            }
-        });
+        }
     </script>
-
 </body>
 </html>

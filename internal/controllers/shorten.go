@@ -35,12 +35,32 @@ func Shorten(lite *sql.DB) http.HandlerFunc {
             return
 		}
 
+		// Add HTMX check
+		if r.Header.Get("HX-Request") == "true" {
+			// For HTMX requests, only return the URL container div
+			data := map[string]string{
+				"ShortURL": shortURL,
+			}
+
+			t, err := template.ParseFiles("internal/views/partials/url_result.html")
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			if err = t.Execute(w, data); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			return
+		}
+
+		// For regular requests, return the full page
 		data := map[string]string{
 			"ShortURL": shortURL,
 		}
 
 		t, err := template.ParseFiles("internal/views/shorten.html")
-		if err!= nil {
+		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
@@ -74,4 +94,21 @@ func Proxy(lite *sql.DB) http.HandlerFunc {
 
 		http.Redirect(w, r, origUrl, http.StatusTemporaryRedirect) // Changed to temporary redirect
 	}
+}
+
+// Add new Copy handler for HTMX
+func Copy(w http.ResponseWriter, r *http.Request) {
+	if r.Header.Get("HX-Request") != "true" {
+		http.Error(w, "HTMX request required", http.StatusBadRequest)
+		return
+	}
+
+	url := r.FormValue("url")
+	if url == "" {
+		http.Error(w, "URL not provided", http.StatusBadRequest)
+		return
+	}
+
+	// Return 200 OK for successful copy
+	w.WriteHeader(http.StatusOK)
 }
